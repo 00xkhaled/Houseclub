@@ -8,10 +8,9 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.ContactsContract;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,10 +22,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
-import me.grishka.appkit.Nav;
 import me.grishka.appkit.api.Callback;
 import me.grishka.appkit.api.ErrorResponse;
 import me.grishka.appkit.api.SimpleCallback;
@@ -36,21 +36,31 @@ import me.grishka.appkit.utils.BindableViewHolder;
 import me.grishka.appkit.views.UsableRecyclerView;
 import me.grishka.houseclub.R;
 import me.grishka.houseclub.api.BaseResponse;
+import me.grishka.houseclub.api.methods.GetFollowers;
+import me.grishka.houseclub.api.methods.GetSuggestedInvites;
 import me.grishka.houseclub.api.methods.InviteToApp;
-import me.grishka.houseclub.api.methods.SearchPeople;
+import me.grishka.houseclub.api.model.Contact;
 import me.grishka.houseclub.api.model.FullUser;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
 public class InviteListFragment extends SearchListFragment {
 
-    private InviteListAdapter adapter;
+    private List<Contact> contacts = null;
+    private final Map<String,String> a_contacts = new HashMap<>();
+    private List<Contact> r_contacts = null;
 
     private static final int REQUEST_READ_CONTACTS = 0;
+
+    private static final int limit = 50;
 
     public InviteListFragment() {
         min_query_lenght = 0;
     }
+
+    private InviteListAdapter adapter;
+
+
 
     @Override
     protected RecyclerView.Adapter getAdapter(){
@@ -65,7 +75,7 @@ public class InviteListFragment extends SearchListFragment {
                                            @NonNull int[] grantResults) {
         if (requestCode == REQUEST_READ_CONTACTS) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getContactList("");
+                readContacts();
             }
         }
     }
@@ -79,25 +89,78 @@ public class InviteListFragment extends SearchListFragment {
         return false;
     }
 
-    private void readContacts(String query) {
+    private void readContacts() {
         if (!askContactsPermission()) {
             return;
         } else {
-            getContactList(query);
+            contacts = getContactList();
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    reqestData();
+                }
+            });
         }
     }
 
-    private void getContactList(String query) {
+
+    private void searchContacts(String query) {
+
+        if(query == null)
+            query = "";
 
         List<FullUser> users = new ArrayList<>();
-        int count = 0, limit = 10;
+
+        users.clear();
+
+        int i =0;
+        for (Contact contact : r_contacts) {
+
+            contact.name = a_contacts.get(contact.phone_number);
+
+            Pattern pattern = Pattern.compile(Pattern.quote(query), Pattern.CASE_INSENSITIVE);
+            if (query.equals("") || (
+                    pattern.matcher(contact.name + contact.phone_number).find())) {
+
+                FullUser user = new FullUser();
+                user.name = contact.name;
+                user.dsplayname = contact.phone_number;
+                String in_app = contact.in_app ? getString(R.string.yes) : getString(R.string.no);
+                String is_invited = contact.is_invited ? getString(R.string.yes) : getString(R.string.no);
+                user.bio = contact.phone_number + getString(R.string.contact_separator) +
+                    getString(R.string.contact_in_app, in_app) + getString(R.string.contact_separator) +
+                    getString(R.string.contact_is_invited, is_invited) + getString(R.string.contact_separator) +
+                    getString(R.string.contact_num_friends, contact.num_friends);
+                users.add(user);
+
+                i++;
+                if(i > limit) break;
+            }
+
+        }
+
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                data.clear();
+                onDataLoaded(users, false);
+            }
+        });
+
+
+
+    }
+
+    private List<Contact> getContactList() {
+
+        List<Contact> m_contacts = new ArrayList<>();
 
         ContentResolver cr = getContext().getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
                 null, null, null, null);
 
         if ((cur != null ? cur.getCount() : 0) > 0) {
-            while (cur != null && cur.moveToNext()) {
+            while (cur.moveToNext()) {
 
                 String id = cur.getString(
                         cur.getColumnIndex(ContactsContract.Contacts._ID));
@@ -116,22 +179,9 @@ public class InviteListFragment extends SearchListFragment {
                         String phoneNo = pCur.getString(pCur.getColumnIndex(
                                 ContactsContract.CommonDataKinds.Phone.NUMBER));
 
-                        if (query.equals("") || (
-                                Pattern.compile(Pattern.quote(query), Pattern.CASE_INSENSITIVE).matcher(name).find() ||
-                                        Pattern.compile(Pattern.quote(query), Pattern.CASE_INSENSITIVE).matcher(phoneNo).find())) {
+                        m_contacts.add(new Contact(name, phoneNo));
+                        a_contacts.put(phoneNo, name);
 
-                            FullUser u = new FullUser();
-                            u.name = name;
-                            u.bio = phoneNo;
-                            users.add(u);
-
-                            count++;
-                            if (count > limit) {
-                                pCur.moveToLast();
-                                cur.moveToLast();
-                            }
-
-                        }
                     }
                     pCur.close();
                 }
@@ -143,9 +193,26 @@ public class InviteListFragment extends SearchListFragment {
             cur.close();
         }
 
+        return m_contacts;
 
-        data.clear();
-        onDataLoaded(users, false);
+    }
+
+
+    void reqestData() {
+
+        currentRequest=new GetSuggestedInvites(contacts)
+                .setCallback(new SimpleCallback<GetSuggestedInvites.Response>(this){
+                    @Override
+                    public void onSuccess(GetSuggestedInvites.Response result){
+                        currentRequest=null;
+                        r_contacts = result.suggested_invites;
+
+                        Toast.makeText(getContext(), getString(R.string.contact_invites, result.num_invites), Toast.LENGTH_SHORT).show();
+
+                        searchContacts(searchQuery);
+                    }
+                })
+                .exec();
 
     }
 
@@ -153,10 +220,18 @@ public class InviteListFragment extends SearchListFragment {
     @Override
     protected void doLoadData(int offset, int count) {
 
-    if(searchQuery != null)
-        readContacts(searchQuery);
-    else
-        readContacts("");
+        showProgress();
+
+        if(r_contacts == null) {
+            Runnable r = () -> {
+                if (contacts == null) {
+                    readContacts();
+                }
+            };
+            new Thread(r).start();
+        } else {
+            searchContacts(searchQuery);
+        }
 
 
 
@@ -234,12 +309,12 @@ public class InviteListFragment extends SearchListFragment {
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 			builder.setTitle(R.string.invite_dialog_title);
-			builder.setMessage(getString(R.string.invite_dialog_text, item.name, item.bio));
+			builder.setMessage(getString(R.string.invite_dialog_text, item.name, item.dsplayname));
 
-			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					new InviteToApp(item.name, item.bio, "")
+					new InviteToApp(item.name, item.dsplayname, "")
 							.wrapProgress(getActivity())
 
 							.setCallback(new Callback<BaseResponse>(){
@@ -250,14 +325,14 @@ public class InviteListFragment extends SearchListFragment {
 
 								@Override
 								public void onError(ErrorResponse error){
-                                    Toast.makeText(getContext(), getString(R.string.invite_err, ""), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), R.string.invite_err, Toast.LENGTH_SHORT).show();
                                     error.showToast(getContext());
 								}
 							})
 							.exec();
 				}
 			});
-			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.cancel();
