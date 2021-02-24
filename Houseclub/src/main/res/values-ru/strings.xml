@@ -79,4 +79,7 @@
     <string name="contact_is_invited">Есть приглашение: %s</string>
     <string name="contact_num_friends">%d друзей в Clubhouse</string>
     <string name="contact_invites">Вы можете пригласить %d человек</string>
+
+    <string name="return_to_channel">Возврат к %1$s</string>
+
 </resources> 
