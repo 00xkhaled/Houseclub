@@ -73,5 +73,10 @@
     <string name="invite_dialog_title">Отправить приглашение</string>
     <string name="invite_dialog_text">Пригласить %s (%s) в Clubhouse</string>
     <string name="invite_ok">Приглашение успешно отправлено</string>
-    <string name="invite_err">Непредвиденная ошибка: %s</string>
+    <string name="invite_err">Непредвиденная ошибка</string>
+
+    <string name="contact_in_app">В Clubhouse: %s</string>
+    <string name="contact_is_invited">Есть приглашение: %s</string>
+    <string name="contact_num_friends">%d друзей в Clubhouse</string>
+    <string name="contact_invites">Вы можете пригласить %d человек</string>
 </resources> 
