@@ -44,6 +44,14 @@
 		<item quantity="many">%d obserwowanych</item>
 		<item quantity="other">%d obserwowanych</item>
 	</plurals>
+	<plurals name="invites">
+		<item quantity="one">Masz %d zaproszenie</item>
+		<item quantity="few">Masz %d zaproszenia</item>
+		<item quantity="many">Masz %d zaproszeń</item>
+		<item quantity="other">Masz %d zaproszeń</item>
+	</plurals>
+	<string name="invite_button_label">Zaproś</string>
+	<string name="invite_phone_hint">Wprowadź numer telefonu</string>
 	<string name="follows_you">Obserwuje Cię</string>
 	<string name="follow">Obserwuj</string>
 	<string name="following">Obserwowany(-a)</string>
