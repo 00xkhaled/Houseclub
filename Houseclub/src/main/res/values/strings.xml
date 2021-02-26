@@ -59,6 +59,13 @@
 	<string name="log_in_to_activate">Please log in again to activate your account.</string>
 	<string name="ok">OK</string>
 
+	<plurals name="invites">
+		<item quantity="one">You have %d invite</item>
+		<item quantity="other">You have %d invites</item>
+	</plurals>
+	<string name="invite_button_label">Invite</string>
+	<string name="invite_phone_hint">Enter phone number</string>
+
 	<string name="search_people_hint">Find people</string>
 	<string name="search_clubs_hint">Find clubs</string>
 	<string name="search_btn_cancel">Cancel</string>

@@ -1,5 +1,4 @@
 <resources>
-	<string name="app_name">Houseclub</string>
 	<string name="login">Logowanie</string>
 	<string name="phone_number">Numer telefonu</string>
 	<string name="enter_your_phone">Wprowadź swój numer</string>
@@ -44,14 +43,6 @@
 		<item quantity="many">%d obserwowanych</item>
 		<item quantity="other">%d obserwowanych</item>
 	</plurals>
-	<plurals name="invites">
-		<item quantity="one">Masz %d zaproszenie</item>
-		<item quantity="few">Masz %d zaproszenia</item>
-		<item quantity="many">Masz %d zaproszeń</item>
-		<item quantity="other">Masz %d zaproszeń</item>
-	</plurals>
-	<string name="invite_button_label">Zaproś</string>
-	<string name="invite_phone_hint">Wprowadź numer telefonu</string>
 	<string name="follows_you">Obserwuje Cię</string>
 	<string name="follow">Obserwuj</string>
 	<string name="following">Obserwowany(-a)</string>
@@ -70,4 +61,31 @@
 	<string name="event_expired">To wydarzenie już zakończyło się</string>
 	<string name="log_in_to_activate">Zaloguj się ponownie, aby aktywować swoje konto.</string>
 	<string name="ok">OK</string>
+
+	<plurals name="invites">
+		<item quantity="one">Masz %d zaproszenie</item>
+		<item quantity="few">Masz %d zaproszenia</item>
+		<item quantity="many">Masz %d zaproszeń</item>
+		<item quantity="other">Masz %d zaproszeń</item>
+	</plurals>
+	<string name="invite_button_label">Zaproś</string>
+	<string name="invite_phone_hint">Wprowadź numer telefonu</string>
+
+	<string name="search_people_hint">Znajdź ludzi</string>
+	<string name="search_clubs_hint">Znajdź społeczności</string>
+	<string name="search_btn_cancel">Anulowanie</string>
+	<string name="search_error_no_users">Nie znaleziono użytkowników</string>
+	<string name="search_error_no_clubs">Nie znaleziono społeczności</string>
+	<string name="invite_dialog_title">Wysłać zaproszenie</string>
+	<string name="invite_dialog_text">Zaproś %s (%s) do Clubhouse</string>
+	<string name="invite_ok">Zaproszenie wysłane pomyślnie</string>
+	<string name="invite_err">Niespodziewany błąd</string>
+
+	<string name="contact_in_app">W Clubhouse: %s</string>
+	<string name="contact_is_invited">Jest zaproszenie: %s</string>
+	<string name="contact_num_friends">%d przyjaciele w Clubhouse</string>
+	<string name="contact_invites">Możesz zaprosić %d osób</string>
+
+	<string name="return_to_channel">Wrócić do %1$s</string>
+
 </resources>

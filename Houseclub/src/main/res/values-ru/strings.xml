@@ -64,6 +64,15 @@
     <string name="log_in_to_activate">Для активации аккаунта, повторно войдите в приложение.</string>
     <string name="ok">OK</string>
 
+    <plurals name="invites">
+        <item quantity="one">У вас %d инвайт</item>
+        <item quantity="few">У вас %d инвайта</item>
+        <item quantity="many">У вас %d инвайтов</item>
+        <item quantity="other">У вас %d инвайтов</item>
+    </plurals>
+    <string name="invite_button_label">Приглашение</string>
+    <string name="invite_phone_hint">Введите номер телефона</string>
+
     <string name="search_people_hint">Найти людей</string>
     <string name="search_clubs_hint">Найти сообщества</string>
     <string name="search_btn_cancel">Отмена</string>
