@@ -149,6 +149,7 @@ public class InChannelFragment extends BaseRecyclerFragment<ChannelUser> impleme
 	}
 
 	private void onLeaveClick(View v){
+		v.setOnClickListener(null);
 		VoiceService.getInstance().leaveChannel();
 		Nav.finish(this);
 	}
