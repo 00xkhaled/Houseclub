@@ -1,5 +1,5 @@
 <resources>
-	<string name="app_name" translatable="false">Houseclub</string>
+	<string name="app_name" translatable="false">mkljczk/Houseclub</string>
 	<string name="login">Login</string>
 	<string name="phone_number">Phone number</string>
 	<string name="enter_your_phone">Enter your phone #</string>
@@ -85,4 +85,9 @@
 	<string name="contact_separator" translatable="false">,&#160;</string>
 
 	<string name="mutual_followers_title">Mutual followers</string>
+
+	<string name="add_instagram">Link Instagram</string>
+	<string name="confirm_unlink_instagram_title">Unlink Instagram?</string>
+	<string name="confirm_unlink_instagram">Are you sure want to unlink your Instagram profile? You can link it again in the future.</string>
+	<string name="instagram_linked">Instagram linked, reopen page to see</string>
 </resources>

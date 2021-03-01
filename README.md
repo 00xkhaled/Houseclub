@@ -1,6 +1,6 @@
 # Fork maintained by mkljczk
 
-Just a fork of Houseclub, I don't really know Java, just merged a few PRs: [#199](https://github.com/grishka/Houseclub/pull/199), [#62](https://github.com/grishka/Houseclub/pull/62), [#200](https://github.com/grishka/Houseclub/pull/200), [#144](https://github.com/grishka/Houseclub/pull/144), [#147](https://github.com/grishka/Houseclub/pull/147) and [#176](https://github.com/grishka/Houseclub/pull/176) in a dirty way and built an apk. Can't do anything about bugs if you encounter anything. If you want to contribute, make a PR to the original repo and I'll grab your code changes.
+Just a fork of Houseclub, I don't really know Java, just merged a few PRs: [#199](https://github.com/grishka/Houseclub/pull/199), [#62](https://github.com/grishka/Houseclub/pull/62), [#200](https://github.com/grishka/Houseclub/pull/200), [#144](https://github.com/grishka/Houseclub/pull/144), [#147](https://github.com/grishka/Houseclub/pull/147), [#176](https://github.com/grishka/Houseclub/pull/176) and [#131](https://github.com/grishka/Houseclub/pull/131) in a dirty way and built an apk. Can't do anything about bugs if you encounter anything. If you want to contribute, make a PR to the original repo and I'll grab your code changes.
 
 ---
 

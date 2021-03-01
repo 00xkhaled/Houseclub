@@ -85,4 +85,8 @@
 	<string name="contact_is_invited">Jest zaproszony(-a): %s</string>
 	<string name="contact_num_friends">%d znajomych na Clubhouse</string>
 	<string name="mutual_followers_title">Wzajemne obserwacje</string>
+    <string name="add_instagram">Połącz Instagram</string>
+	<string name="confirm_unlink_instagram_title">Odłączyć Instagram?</string>
+	<string name="confirm_unlink_instagram">Czy na pewno chcesz odłączyć swój profil na Instagramie? Możesz go połączyć później.</string>
+	<string name="instagram_linked">Połączono Instagram, otwórz stronę profilu jeszcze raz, aby zobaczyć</string>
 </resources>

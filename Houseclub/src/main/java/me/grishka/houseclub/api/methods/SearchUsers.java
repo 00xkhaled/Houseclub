@@ -5,9 +5,9 @@ import java.util.List;
 import me.grishka.houseclub.api.ClubhouseAPIRequest;
 import me.grishka.houseclub.api.model.FullUser;
 
-public class SearchPeople extends ClubhouseAPIRequest<SearchPeople.Resp> {
+public class SearchUsers extends ClubhouseAPIRequest<SearchUsers.Resp> {
 
-    public SearchPeople(String query) {
+    public SearchUsers(String query) {
         super("POST", "search_users", Resp.class);
         requestBody = new Body(query);
     }
