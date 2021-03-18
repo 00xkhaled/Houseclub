@@ -1,48 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:padding="16dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="72dp"
+                android:layout_height="72dp">
+
+                <me.grishka.houseclub.views.SquircleImageView
+                    android:id="@+id/photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:src="#0f0" />
+
+                <ImageView
+                    android:id="@+id/photo_edit_icon"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_photo_camera"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/follow_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/follow" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="18dp"
+            tools:text="User Name" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13dp"
+                tools:text="\@username" />
+
+            <TextView
+                android:id="@+id/follows_you"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:alpha="0.5"
+                android:text="@string/follows_you"
+                android:textSize="13dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/followers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13dp"
+                tools:text="25 followers" />
+
+            <TextView
+                android:id="@+id/following"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:textSize="13dp"
+                tools:text="25 following" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/bio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:textSize="15dp"
+            tools:text="bio here" />
+
+        <LinearLayout
+            android:id="@+id/social"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-16dp"
+            android:layout_marginBottom="32dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/twitter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:drawableLeft="@drawable/ic_twitter"
+                android:drawablePadding="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textSize="15dp"
+                tools:text="twitter" />
+
+            <TextView
+                android:id="@+id/instagram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_instagram"
+                android:drawablePadding="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textSize="15dp"
+                tools:text="instagram" />
+
+        </LinearLayout>
+
+		<LinearLayout
+			android:id="@+id/users_pics"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="5dp"
+			android:orientation="horizontal">
+
+
+			<me.grishka.houseclub.views.SquircleImageView
+				android:id="@+id/pic1"
+				android:layout_width="48dp"
+				android:layout_height="48dp"
+				android:layout_marginRight="-28dp"
+				android:visibility="gone"
+				tools:src="#0f0"/>
+
+			<me.grishka.houseclub.views.SquircleImageView
+				android:id="@+id/pic2"
+				android:layout_width="48dp"
+				android:layout_height="48dp"
+				android:layout_marginRight="-8dp"
+				android:visibility="gone"
+				tools:src="#0f0"/>
+
+			<me.grishka.houseclub.views.SquircleImageView
+				android:id="@+id/pic3"
+				android:layout_width="48dp"
+				android:layout_height="48dp"
+				android:layout_marginRight="8dp"
+				android:visibility="gone"
+				tools:src="#0f0"/>
+
+		</LinearLayout>
 
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_marginTop="5dp"
 			android:orientation="horizontal">
 
-			<me.grishka.houseclub.views.SquircleImageView
-				android:id="@+id/photo"
-				android:layout_width="72dp"
-				android:layout_height="72dp"
-				tools:src="#0f0"/>
-
-			<View
-				android:layout_width="0dp"
-				android:layout_height="1dp"
-				android:layout_weight="1"/>
-
-			<Button
-				android:id="@+id/follow_btn"
+			<TextView
+				android:id="@+id/followed_by"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
-				android:text="@string/follow"/>
+				android:textSize="13dp"
+				android:textFontWeight="400"
+				android:fontFamily="sans-serif-medium"
+				tools:text=" "/>
+
+			<TextView
+				android:id="@+id/mutuals"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textSize="13dp"
+				android:fontFamily="sans-serif-medium"
+				android:textFontWeight="600"
+				tools:text="username "/>
+
 
 		</LinearLayout>
-
-		<TextView
-			android:id="@+id/name"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="16dp"
-			android:textSize="18dp"
-			android:fontFamily="sans-serif-medium"
-			tools:text="User Name"/>
 
 		<LinearLayout
 			android:layout_width="match_parent"
@@ -51,154 +218,93 @@
 			android:orientation="horizontal">
 
 			<TextView
-				android:id="@+id/username"
+				android:id="@+id/member_of_text"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:textSize="13dp"
-				tools:text="\@username"/>
-
-			<TextView
-				android:id="@+id/follows_you"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:textSize="13dp"
-				android:layout_marginLeft="16dp"
-				android:alpha="0.5"
-				android:text="@string/follows_you"/>
-
+				android:fontFamily="sans-serif-medium"
+				android:textFontWeight="600"
+				tools:text="Member of "/>
 		</LinearLayout>
 
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="16dp"
 			android:orientation="horizontal">
-
 			<TextView
-				android:id="@+id/followers"
+				android:id="@+id/user_clubs"
+				android:layout_marginTop="10dp"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:textSize="13dp"
-				tools:text="25 followers"/>
-
-			<TextView
-				android:id="@+id/following"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginLeft="16dp"
-				android:textSize="13dp"
-				tools:text="25 following"/>
-			<TextView
-				android:id="@+id/mutualfollowers"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginLeft="16dp"
-				android:textSize="13dp"
-				tools:text="25 mutual followers"/>
-		</LinearLayout>
-
-		<TextView
-			android:id="@+id/bio"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="32dp"
-			android:layout_marginBottom="32dp"
-			android:textSize="15dp"
-			tools:text="bio here"/>
-
-		<LinearLayout
-			android:id="@+id/social"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="-16dp"
-			android:layout_marginBottom="32dp"
-			android:orientation="horizontal">
-
-			<TextView
-				android:id="@+id/twitter"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:paddingTop="4dp"
-				android:paddingBottom="4dp"
-				android:textSize="15dp"
-				android:layout_marginRight="16dp"
-				android:drawableLeft="@drawable/ic_twitter"
-				android:drawablePadding="8dp"
-				tools:text="twitter"/>
-
-			<TextView
-				android:id="@+id/instagram"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:paddingTop="4dp"
-				android:paddingBottom="4dp"
-				android:textSize="15dp"
-				android:drawableLeft="@drawable/ic_instagram"
-				android:drawablePadding="8dp"
-				tools:text="instagram"/>
-
-		</LinearLayout>
-
-		<LinearLayout
-			android:id="@+id/inviter_btn"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal">
-
-			<me.grishka.houseclub.views.SquircleImageView
-				android:id="@+id/inviter_photo"
-				android:layout_width="48dp"
-				android:layout_height="48dp"
-				android:layout_marginRight="8dp"
-				tools:src="#0f0"/>
-
-			<TextView
-				android:id="@+id/invite_info"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
 				android:textSize="14dp"
-				tools:text="Joined 1/2/3\nNominated by whomever"/>
+				android:fontFamily="sans-serif-medium"
+				android:textFontWeight="500"
+				tools:text=" club 1"/>
 
 		</LinearLayout>
 
-		<LinearLayout
-			android:id="@+id/invite_layout"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			android:paddingTop="16dp"
-			android:visibility="gone"
-			tools:visibility="visible">
-
-			<TextView
-				android:id="@+id/num_of_invites"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				tools:text="You have 3 invites" />
-
-			<EditText
-				android:id="@+id/invite_phone_num"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:hint="@string/invite_phone_hint"
-				android:importantForAutofill="no"
-				android:inputType="phone" />
-
-			<Button
-				android:id="@+id/invite_button"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_horizontal"
-				android:text="@string/invite_button_label" />
-
-		</LinearLayout>
 		<WebView
 			android:id="@+id/webView"
 			android:layout_width="match_parent"
 			android:visibility="gone"
 			android:layout_height="540dp"/>
 
-	</LinearLayout>
+        <LinearLayout
+            android:id="@+id/inviter_btn"
+			android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <me.grishka.houseclub.views.SquircleImageView
+                android:id="@+id/inviter_photo"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginRight="8dp"
+                tools:src="#0f0" />
+
+            <TextView
+                android:id="@+id/invite_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="14dp"
+                tools:text="Joined 1/2/3\nNominated by whomever" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/invite_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="16dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <TextView
+                android:id="@+id/num_of_invites"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="You have 3 invites" />
+
+            <EditText
+                android:id="@+id/invite_phone_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/invite_phone_hint"
+                android:importantForAutofill="no"
+                android:inputType="phone" />
+
+            <Button
+                android:id="@+id/invite_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/invite_button_label" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </ScrollView>

@@ -13,6 +13,8 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.JsonObject;
 import com.pubnub.api.PNConfiguration;
 import com.pubnub.api.PubNub;
@@ -32,7 +34,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import androidx.annotation.Nullable;
 import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
@@ -110,7 +111,7 @@ public class VoiceService extends Service{
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId){
 		if(engine!=null){
-			String id = intent.getStringExtra("channel");
+			String id=intent.getStringExtra("channel");
 			channel=DataProvider.getChannel(id);
 			updateChannel(channel);
 
@@ -145,7 +146,6 @@ public class VoiceService extends Service{
 	}
 
 	private void doJoinChannel(){
-    engine.setAudioProfile(Constants.AUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO, Constants.AUDIO_SCENARIO_GAME_STREAMING);
 		engine.setChannelProfile(isSelfSpeaker ? Constants.CHANNEL_PROFILE_COMMUNICATION : Constants.CHANNEL_PROFILE_LIVE_BROADCASTING);
 		engine.joinChannel(channel.token, channel.channel, "", Integer.parseInt(ClubhouseSession.userID));
 		uiHandler.postDelayed(pinger, 30000);
@@ -240,10 +240,6 @@ public class VoiceService extends Service{
 		uiHandler.removeCallbacks(pinger);
 		pubnub.unsubscribeAll();
 		pubnub.destroy();
-		uiHandler.post(() -> {
-			for(ChannelEventListener l:listeners)
-				l.onSelfLeft();
-		});
 	}
 
 	public void leaveCurrentChannel(){
@@ -390,18 +386,15 @@ public class VoiceService extends Service{
 		if(!ch.equals(channel.channel))
 			return;
 		int id=msg.get("user_id").getAsInt();
-		uiHandler.post(new Runnable(){
-			@Override
-			public void run(){
-				for(ChannelUser user:channel.users){
-					if(user.userId==id){
-						channel.users.remove(user);
-						break;
-					}
+		uiHandler.post(()->{
+			for(ChannelUser user:channel.users){
+				if(user.userId==id){
+					channel.users.remove(user);
+					break;
 				}
-				for(ChannelEventListener l:listeners)
-					l.onUserLeft(id);
 			}
+			for(ChannelEventListener l:listeners)
+				l.onUserLeft(id);
 		});
 	}
 
@@ -427,8 +420,8 @@ public class VoiceService extends Service{
 		void onChannelUpdated(Channel channel);
 		void onSpeakingUsersChanged(List<Integer> ids);
 		void onChannelEnded();
-		void onSelfLeft();
-	}
+        void onSelfLeft();
+    }
 
 	private class RtcEngineEventHandler extends IRtcEngineEventHandler{
 		@Override
@@ -444,32 +437,26 @@ public class VoiceService extends Service{
 		@Override
 		public void onAudioVolumeIndication(AudioVolumeInfo[] speakers, int totalVolume){
 //			Log.d(TAG, "onAudioVolumeIndication() called with: speakers = ["+Arrays.toString(speakers)+"], totalVolume = ["+totalVolume+"]");
-			uiHandler.post(new Runnable(){
-				@Override
-				public void run(){
-					int selfID=Integer.parseInt(ClubhouseSession.userID);
-					List<Integer> uids=Arrays.stream(speakers).map(s -> s.uid==0 ? selfID : s.uid).collect(Collectors.toList());
-					for(ChannelEventListener l:listeners)
-						l.onSpeakingUsersChanged(uids);
-				}
+			uiHandler.post(()->{
+				int selfID=Integer.parseInt(ClubhouseSession.userID);
+				List<Integer> uids=Arrays.stream(speakers).map(s->s.uid==0 ? selfID : s.uid).collect(Collectors.toList());
+				for(ChannelEventListener l:listeners)
+					l.onSpeakingUsersChanged(uids);
 			});
 		}
 
 		@Override
 		public void onUserMuteAudio(int uid, boolean muted){
 //			Log.d(TAG, "onUserMuteAudio() called with: uid = ["+uid+"], muted = ["+muted+"]");
-			uiHandler.post(new Runnable(){
-				@Override
-				public void run(){
-							for(ChannelUser u:channel.users){
-								if(u.userId==uid){
-									u.isMuted=muted;
-									break;
-								}
-							}
-							for(ChannelEventListener l:listeners)
-								l.onUserMuteChanged(uid, muted);
+			uiHandler.post(()->{
+				for(ChannelUser u:channel.users){
+					if(u.userId==uid){
+						u.isMuted=muted;
+						break;
+					}
 				}
+				for(ChannelEventListener l:listeners)
+					l.onUserMuteChanged(uid, muted);
 			});
 		}
 	}

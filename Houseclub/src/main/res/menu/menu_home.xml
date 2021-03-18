@@ -8,19 +8,26 @@
         android:showAsAction="always"
         android:title="" />
 
-
     <item
         android:id="@+id/homeMenuInvite"
-        android:icon="@drawable/ic_baseline_person_add_24"
+        android:icon="@drawable/ic_baseline_mail_outline_24"
         android:showAsAction="always"
         android:title="" />
 
     <item
-        android:id="@+id/homeMenuSearchPeople"
-        android:icon="@drawable/ic_search_people"
+        android:id="@+id/homeMenuSearchClubs"
+        android:icon="@drawable/ic_baseline_search_24"
         android:showAsAction="always"
         android:title=""
         tools:ignore="AlwaysShowAction" />
+
+    <item
+        android:id="@+id/homeMenuSearchPeople"
+        android:icon="@drawable/ic_baseline_person_search_24"
+        android:showAsAction="always"
+        android:title=""
+        tools:ignore="AlwaysShowAction" />
+
     <item
         android:id="@+id/homeMenuNotifications"
         android:icon="@drawable/ic_notifications"
@@ -33,6 +40,15 @@
         android:showAsAction="always"
         android:title="" />
 
+    <item
+        android:id="@+id/homeMenuAbout"
+        android:showAsAction="never"
+        android:title="About" />
 
+    <item
+        android:id="@+id/homeMenuLogout"
+        android:showAsAction="never"
+        android:title="Logout" />
 
-</menu> 
+</menu>
+
