@@ -9,7 +9,5 @@ public class Event {
     public Date timeStart;
     public String description, name;
     public int eventId;
-    public boolean isMemberOnly;
     public List<FullUser> hosts;
-    public boolean clubIsMember, clubIsFollower;
 }

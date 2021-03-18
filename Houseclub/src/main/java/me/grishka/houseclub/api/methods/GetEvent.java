@@ -6,7 +6,7 @@ import me.grishka.houseclub.api.model.Event;
 public class GetEvent extends ClubhouseAPIRequest<GetEvent.Response> {
 
     public GetEvent(String id) {
-        super("POST", "get_event", Response.class);
+        super("GET", "get_event", Response.class);
         requestBody = new Body(id);
     }
 
@@ -22,3 +22,6 @@ public class GetEvent extends ClubhouseAPIRequest<GetEvent.Response> {
         public Event event;
     }
 }
+
+
+
