@@ -2,7 +2,6 @@ package me.grishka.houseclub;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,12 +22,9 @@ import me.grishka.appkit.api.ErrorResponse;
 import me.grishka.houseclub.api.ClubhouseSession;
 import me.grishka.houseclub.api.methods.CheckWaitlistStatus;
 import me.grishka.houseclub.api.methods.GetChannel;
-import me.grishka.houseclub.api.methods.GetClub;
 import me.grishka.houseclub.api.methods.GetEvent;
 import me.grishka.houseclub.api.methods.JoinChannel;
 import me.grishka.houseclub.api.model.Channel;
-import me.grishka.houseclub.api.model.Club;
-import me.grishka.houseclub.fragments.ClubFragment;
 import me.grishka.houseclub.fragments.HomeFragment;
 import me.grishka.houseclub.fragments.InChannelFragment;
 import me.grishka.houseclub.fragments.LoginFragment;
@@ -36,7 +32,9 @@ import me.grishka.houseclub.fragments.WaitlistedFragment;
 
 public class MainActivity extends FragmentStackActivity {
 
-    private Channel channelToJoin;
+    private String channelToJoin;
+    private Channel channelToJoins;
+
     private static final int PERMISSION_RESULT = 270;
 
     @Override
@@ -154,7 +152,7 @@ public class MainActivity extends FragmentStackActivity {
                                 .setPositiveButton(R.string.join, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        joinChannel(result);
+                                        joinChannel(result.channel);
                                     }
                                 })
                                 .setNegativeButton(R.string.cancel, null)
@@ -169,10 +167,10 @@ public class MainActivity extends FragmentStackActivity {
                 .exec();
     }
 
-    public void joinChannel(Channel chan) {
+    public void joinChannel(String chan) {
         if (VoiceService.getInstance() != null) {
             Channel current = VoiceService.getInstance().getChannel();
-            if (current.channel.equals(chan.channel)) {
+            if(current.channel.equals(chan)){
                 Bundle extras = new Bundle();
                 extras.putBoolean("_can_go_back", true);
                 InChannelFragment fragment = new InChannelFragment();
@@ -183,7 +181,7 @@ public class MainActivity extends FragmentStackActivity {
             VoiceService.getInstance().leaveChannel();
         }
         if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
-            new JoinChannel(chan.channel)
+            new JoinChannel(chan)
                     .wrapProgress(this)
                     .setCallback(new Callback<Channel>() {
                         @Override
@@ -218,10 +216,10 @@ public class MainActivity extends FragmentStackActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PERMISSION_RESULT && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (channelToJoin != null) {
+            if (channelToJoins != null) {
                 joinChannel(channelToJoin);
             }
         }
-        channelToJoin = null;
+        channelToJoins = null;
     }
 }

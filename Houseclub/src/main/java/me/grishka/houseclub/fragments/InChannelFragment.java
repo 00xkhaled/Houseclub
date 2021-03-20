@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.se.omapi.Session;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
@@ -50,7 +51,7 @@ public class InChannelFragment extends BaseRecyclerFragment<ChannelUser> impleme
     private MergeRecyclerAdapter adapter;
     private UserListAdapter speakersAdapter, followedAdapter, othersAdapter;
     private ImageButton muteBtn;
-    private Button raiseBtn;
+    private Button raiseBtn,invite_to_room;
     private Channel channel;
     private ArrayList<ChannelUser> speakers = new ArrayList<>(), followedBySpeakers = new ArrayList<>(), otherUsers = new ArrayList<>();
     private ArrayList<Integer> mutedUsers = new ArrayList<>(), speakingUsers = new ArrayList<>();
@@ -70,9 +71,11 @@ public class InChannelFragment extends BaseRecyclerFragment<ChannelUser> impleme
         super.onViewCreated(view, savedInstanceState);
         view.findViewById(R.id.leave).setOnClickListener(this::onLeaveClick);
 
+        invite_to_room=view.findViewById(R.id.invite_to_room);
         raiseBtn = view.findViewById(R.id.raise);
         muteBtn = view.findViewById(R.id.mute);
 
+        invite_to_room.setOnClickListener(this::onInviteClick);
         raiseBtn.setOnClickListener(this::onRaiseClick);
         muteBtn.setOnClickListener(this::onMuteClick);
 
@@ -154,11 +157,23 @@ public class InChannelFragment extends BaseRecyclerFragment<ChannelUser> impleme
 
     private void onRaiseClick(View v) {
         VoiceService svc = VoiceService.getInstance();
-        if (svc.isHandRaised())
+        if(svc.isHandRaised()){
+            Toast.makeText(getActivity(), "Hand UnRaised", Toast.LENGTH_SHORT).show();
             svc.unraiseHand();
-        else
+        }else{
+            Toast.makeText(getActivity(), "Hand Raised", Toast.LENGTH_SHORT).show();
             svc.raiseHand();
+        }
     }
+
+    private void onInviteClick(View v) {
+        Bundle args=new Bundle();
+        args.putInt("id", Integer.parseInt(ClubhouseSession.userID));
+        args.putString("channel", channel.channel);
+        args.putString("type", "invite_to_room");
+        Nav.go(getActivity(), InviteToRoomFragment.class, args);
+    }
+
 
     private void onMuteClick(View v) {
         VoiceService svc = VoiceService.getInstance();

@@ -111,7 +111,7 @@ public class HomeFragment extends BaseRecyclerFragment<Channel> {
         returnView.findViewById(R.id.return_to_channel).setOnClickListener((it) -> {
             Channel channel = DataProvider.getCachedChannel();
             if (channel != null)
-                ((MainActivity) getActivity()).joinChannel(channel);
+                ((MainActivity) getActivity()).joinChannel(String.valueOf(channel));
         });
         VoiceService.addListener(channelEventListener);
     }
@@ -338,8 +338,9 @@ public class HomeFragment extends BaseRecyclerFragment<Channel> {
         }
 
         @Override
-        public void onClick(View view) {
-            ((MainActivity) getActivity()).joinChannel(item);
+        public void onClick(View view)
+        {
+            ((MainActivity)getActivity()).joinChannel(item.channel);
         }
 
         private ImageView imgForIndex(int index) {

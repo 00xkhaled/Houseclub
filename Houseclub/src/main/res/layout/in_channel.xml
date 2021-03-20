@@ -44,21 +44,31 @@
                 android:layout_height="1dp"
                 android:layout_weight="1" />
 
+
             <Button
                 android:id="@+id/raise"
                 style="@style/Widget.Button.Grey"
-                android:layout_width="wrap_content"
+                android:layout_width="76dp"
                 android:layout_height="wrap_content"
                 android:minWidth="0dp"
-                android:text="✋" />
+                android:text="@string/hand" />
+
+            <Button
+                android:id="@+id/invite_to_room"
+                style="@style/Widget.Button.Grey"
+                android:layout_width="83dp"
+                android:layout_height="wrap_content"
+                android:minWidth="0dp"
+                android:text="@string/plus" />
 
             <ImageButton
                 android:id="@+id/mute"
                 style="@style/Widget.Button.Grey"
-                android:layout_width="wrap_content"
+                android:layout_width="109dp"
                 android:layout_height="wrap_content"
                 android:minWidth="0dp"
-                android:src="@drawable/ic_mic_off" />
+                android:src="@drawable/ic_mic_off"
+                android:contentDescription="@string/todo" />
 
         </LinearLayout>
     </LinearLayout>
