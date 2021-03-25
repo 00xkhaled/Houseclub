@@ -21,7 +21,7 @@ public class GetClub extends ClubhouseAPIRequest<GetClub.Response>{
 	public static class Response{
 		public Club club;
 		public boolean is_admin;
-//		public boolean is_member;
+		public boolean is_member;
 		public boolean is_follower;
 		public List<Topic> topics;
 	}

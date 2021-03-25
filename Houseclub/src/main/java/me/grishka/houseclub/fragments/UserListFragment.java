@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import me.grishka.appkit.Nav;
 import me.grishka.appkit.api.Callback;
 import me.grishka.appkit.api.ErrorResponse;
@@ -159,19 +160,19 @@ public abstract class UserListFragment extends BaseRecyclerFragment<FullUser>{
 
 				new InviteToRoom(getArguments().getString("channel") , item.userId)
 						.setCallback(new Callback<BaseResponse>() {
-							@Override
-							public void onSuccess(BaseResponse result) {
+					@Override
+					public void onSuccess(BaseResponse result) {
 
-								Toast.makeText(getActivity(), "User Pinged", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getActivity(), "User Pinged", Toast.LENGTH_SHORT).show();
 
-							}
-							@Override
-							public void onError(ErrorResponse error) {
+					}
+					@Override
+					public void onError(ErrorResponse error) {
 
-								error.showToast(getContext());
+						error.showToast(getContext());
 
-							}
-						}).exec();
+					}
+				}).exec();
 
 
 

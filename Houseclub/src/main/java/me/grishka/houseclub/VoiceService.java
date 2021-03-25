@@ -146,6 +146,7 @@ public class VoiceService extends Service{
 	}
 
 	private void doJoinChannel(){
+		engine.setAudioProfile(Constants.AUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO, Constants.AUDIO_SCENARIO_GAME_STREAMING);
 		engine.setChannelProfile(isSelfSpeaker ? Constants.CHANNEL_PROFILE_COMMUNICATION : Constants.CHANNEL_PROFILE_LIVE_BROADCASTING);
 		engine.joinChannel(channel.token, channel.channel, "", Integer.parseInt(ClubhouseSession.userID));
 		uiHandler.postDelayed(pinger, 30000);
@@ -240,6 +241,10 @@ public class VoiceService extends Service{
 		uiHandler.removeCallbacks(pinger);
 		pubnub.unsubscribeAll();
 		pubnub.destroy();
+		uiHandler.post(() -> {
+			for(ChannelEventListener l:listeners)
+				l.onSelfLeft();
+		});
 	}
 
 	public void leaveCurrentChannel(){
@@ -420,8 +425,8 @@ public class VoiceService extends Service{
 		void onChannelUpdated(Channel channel);
 		void onSpeakingUsersChanged(List<Integer> ids);
 		void onChannelEnded();
-        void onSelfLeft();
-    }
+		void onSelfLeft();
+	}
 
 	private class RtcEngineEventHandler extends IRtcEngineEventHandler{
 		@Override
@@ -448,15 +453,19 @@ public class VoiceService extends Service{
 		@Override
 		public void onUserMuteAudio(int uid, boolean muted){
 //			Log.d(TAG, "onUserMuteAudio() called with: uid = ["+uid+"], muted = ["+muted+"]");
-			uiHandler.post(()->{
-				for(ChannelUser u:channel.users){
-					if(u.userId==uid){
-						u.isMuted=muted;
-						break;
+			uiHandler.post(new Runnable(){
+				@Override
+				public void run(){
+					for(ChannelUser u:channel.users){
+						if(u.userId==uid){
+							u.isMuted=muted;
+							break;
+						}
 					}
+					for(ChannelEventListener l:listeners)
+						l.onUserMuteChanged(uid, muted);
 				}
-				for(ChannelEventListener l:listeners)
-					l.onUserMuteChanged(uid, muted);
+				
 			});
 		}
 	}

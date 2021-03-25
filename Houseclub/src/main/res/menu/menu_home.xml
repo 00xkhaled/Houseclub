@@ -2,17 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <item
         android:id="@+id/homeMenuEvents"
         android:icon="@drawable/ic_baseline_calendar_today_24"
         android:showAsAction="always"
         android:title="" />
 
+    <!--
     <item
         android:id="@+id/homeMenuInvite"
         android:icon="@drawable/ic_baseline_mail_outline_24"
         android:showAsAction="always"
-        android:title="" />
+        android:title="" />-->
+
 
     <item
         android:id="@+id/homeMenuSearchClubs"
@@ -40,15 +43,6 @@
         android:showAsAction="always"
         android:title="" />
 
-    <item
-        android:id="@+id/homeMenuAbout"
-        android:showAsAction="never"
-        android:title="About" />
 
-    <item
-        android:id="@+id/homeMenuLogout"
-        android:showAsAction="never"
-        android:title="Logout" />
 
 </menu>
-

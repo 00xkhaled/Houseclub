@@ -1,76 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/refresh_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFF">
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/refresh_layout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#FFF">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+		<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1">
+		<me.grishka.appkit.views.UsableRecyclerView
+			android:id="@+id/list"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"/>
 
-            <me.grishka.appkit.views.UsableRecyclerView
-                android:id="@+id/list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+		<include layout="@layout/appkit_empty"
+			android:id="@+id/empty"/>
+		</FrameLayout>
 
-            <include
-                android:id="@+id/empty"
-                layout="@layout/appkit_empty" />
-        </FrameLayout>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:layout_gravity="bottom"
+			android:padding="8dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            android:padding="8dp">
+			<Button
+				android:id="@+id/leave"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				style="@style/Widget.Button.Grey"
+				android:text="@string/leave_room"/>
 
-            <Button
-                android:id="@+id/leave"
-                style="@style/Widget.Button.Grey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/leave_room" />
+			<View
+				android:layout_width="0dp"
+				android:layout_height="1dp"
+				android:layout_weight="1"/>
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+			<Button
+				android:id="@+id/invite_to_room"
+				style="@style/Widget.Button.Grey"
+				android:layout_width="54dp"
+				android:layout_height="wrap_content"
+				android:minWidth="0dp"
+				android:text="+" />
 
+			<View
+				android:id="@+id/divider"
+				android:layout_width="9dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:background="?android:attr/listDivider"
+				android:visibility="invisible"
+				tools:visibility="invisible" />
 
-            <Button
-                android:id="@+id/raise"
-                style="@style/Widget.Button.Grey"
-                android:layout_width="76dp"
-                android:layout_height="wrap_content"
-                android:minWidth="0dp"
-                android:text="@string/hand" />
+			<Button
+				android:id="@+id/raise"
+				style="@style/Widget.Button.Grey"
+				android:layout_width="85dp"
+				android:layout_height="wrap_content"
+				android:minWidth="0dp"
+				android:text="✋" />
 
-            <Button
-                android:id="@+id/invite_to_room"
-                style="@style/Widget.Button.Grey"
-                android:layout_width="83dp"
-                android:layout_height="wrap_content"
-                android:minWidth="0dp"
-                android:text="@string/plus" />
+			<ImageButton
+				android:id="@+id/mute"
+				style="@style/Widget.Button.Grey"
+				android:layout_width="99dp"
+				android:layout_height="wrap_content"
+				android:minWidth="0dp"
+				android:src="@drawable/ic_mic_off" />
 
-            <ImageButton
-                android:id="@+id/mute"
-                style="@style/Widget.Button.Grey"
-                android:layout_width="109dp"
-                android:layout_height="wrap_content"
-                android:minWidth="0dp"
-                android:src="@drawable/ic_mic_off"
-                android:contentDescription="@string/todo" />
+			<View
+				android:id="@+id/divider3"
+				android:layout_width="1dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:background="?android:attr/listDivider"
+				android:visibility="invisible"
+				tools:visibility="invisible" />
 
-        </LinearLayout>
-    </LinearLayout>
+		</LinearLayout>
+	</LinearLayout>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

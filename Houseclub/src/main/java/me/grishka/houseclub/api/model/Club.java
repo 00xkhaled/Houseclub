@@ -13,7 +13,7 @@ public class Club implements Parcelable{
 	public String photo_url;
 	public int num_members;
 	public int num_followers;
-//	public boolean is_member;
+	public boolean is_member;
 	public boolean is_follower;
 
 
@@ -32,7 +32,7 @@ public class Club implements Parcelable{
 		dest.writeString(this.photo_url);
 		dest.writeInt(this.num_members);
 		dest.writeInt(this.num_followers);
-//		dest.writeByte(this.is_member ? (byte) 1 : (byte) 0);
+		dest.writeByte(this.is_member ? (byte) 1 : (byte) 0);
 		dest.writeByte(this.is_follower ? (byte) 1 : (byte) 0);
 
 
@@ -45,7 +45,7 @@ public class Club implements Parcelable{
 		this.photo_url=source.readString();
 		this.num_members=source.readInt();
 		this.num_followers=source.readInt();
-//		this.is_member=source.readByte()!=0;
+		this.is_member=source.readByte()!=0;
 		this.is_follower=source.readByte()!=0;
 
 	}
@@ -59,7 +59,7 @@ public class Club implements Parcelable{
 		this.photo_url=in.readString();
 		this.num_members=in.readInt();
 		this.num_followers=in.readInt();
-//		this.is_member=in.readByte()!=0;
+		this.is_member=in.readByte()!=0;
 		this.is_follower=in.readByte()!=0;
 
 

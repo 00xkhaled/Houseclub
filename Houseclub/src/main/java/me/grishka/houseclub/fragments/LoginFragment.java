@@ -2,15 +2,17 @@ package me.grishka.houseclub.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.LocaleList;
+import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
@@ -21,117 +23,113 @@ import io.michaelrocks.libphonenumber.android.Phonenumber;
 import me.grishka.appkit.Nav;
 import me.grishka.appkit.api.ErrorResponse;
 import me.grishka.appkit.api.SimpleCallback;
+import me.grishka.appkit.fragments.ToolbarFragment;
 import me.grishka.houseclub.R;
 import me.grishka.houseclub.api.BaseResponse;
 import me.grishka.houseclub.api.ClubhouseSession;
-import me.grishka.houseclub.api.methods.CallPhoneNumberAuth;
+import me.grishka.houseclub.api.methods.CheckForUpdate;
 import me.grishka.houseclub.api.methods.CompletePhoneNumberAuth;
 import me.grishka.houseclub.api.methods.ResendPhoneNumberAuth;
 import me.grishka.houseclub.api.methods.StartPhoneNumberAuth;
 
-public class LoginFragment extends BaseToolbarFragment {
+public class LoginFragment extends BaseToolbarFragment{
 
 	private EditText phoneInput, codeInput;
-	private Button resendCodeBtn, nextBtn, callMeBtn;
-	private TextView showResendCodeOption;
+	private Button resendBtn, nextBtn;
 	private CountryCodePicker countryCodePicker;
 	private LinearLayout resendCodeLayout;
-	private boolean sentCode = false;
+	private boolean sentCode=false;
 	private PhoneNumberUtil phoneNumberUtil;
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+	@Override
+	public void onAttach(Activity activity){
+		super.onAttach(activity);
+//		setTitle(R.string.login);
 	}
 
 	@Override
-	public View onCreateContentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.login, container, false);
+	public View onCreateContentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+		View view=inflater.inflate(R.layout.login, container, false);
 
-		phoneNumberUtil = PhoneNumberUtil.createInstance(getActivity());
-		phoneInput = view.findViewById(R.id.phone_input);
-		codeInput = view.findViewById(R.id.code_input);
-		showResendCodeOption = view.findViewById(R.id.show_resend_code_option);
-		callMeBtn = view.findViewById(R.id.call_me);
-		resendCodeBtn = view.findViewById(R.id.resend_code);
-		nextBtn = view.findViewById(R.id.next);
-		countryCodePicker = view.findViewById(R.id.country_code_picker);
-		resendCodeLayout = view.findViewById(R.id.resend_code_layout);
+		phoneNumberUtil=PhoneNumberUtil.createInstance(getActivity());
+		phoneInput=view.findViewById(R.id.phone_input);
+		codeInput=view.findViewById(R.id.code_input);
+		resendBtn=view.findViewById(R.id.resend_code);
+		nextBtn=view.findViewById(R.id.next);
+		countryCodePicker=view.findViewById(R.id.country_code_picker);
+		resendCodeLayout=view.findViewById(R.id.resend_code_layout);
 
 		codeInput.setVisibility(View.GONE);
 		resendCodeLayout.setVisibility(View.GONE);
-		showResendCodeOption.setVisibility(View.GONE);
 
 		countryCodePicker.registerPhoneNumberTextView(phoneInput);
 		nextBtn.setOnClickListener(this::onNextClick);
-		resendCodeBtn.setOnClickListener(this::onResendCodeClick);
-		callMeBtn.setOnClickListener(this::onCallMeClick);
-		showResendCodeOption.setOnClickListener(this::onShowResendOption);
-		phoneInput.addTextChangedListener(new TextWatcher() {
+		resendBtn.setOnClickListener(this::onResendClick);
+		phoneInput.addTextChangedListener(new TextWatcher(){
 			@Override
-			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2){
 
 			}
 
 			@Override
-			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2){
 
 			}
 
 			@Override
-			public void afterTextChanged(Editable editable) {
-				try {
-					Phonenumber.PhoneNumber number = phoneNumberUtil.parse(phoneInput.getText().toString(), countryCodePicker.getSelectedCountryNameCode());
-					String country = phoneNumberUtil.getRegionCodeForNumber(number);
-					if (country != null)
+			public void afterTextChanged(Editable editable){
+				try{
+					Phonenumber.PhoneNumber number=phoneNumberUtil.parse(phoneInput.getText().toString(), countryCodePicker.getSelectedCountryNameCode());
+					String country=phoneNumberUtil.getRegionCodeForNumber(number);
+					if(country!=null)
 						countryCodePicker.setCountryForNameCode(country);
-				} catch (NumberParseException igonre) {}
+				}catch(NumberParseException igonre){}
 			}
 		});
 
 		return view;
 	}
 
-	private String getCleanPhoneNumber() {
+	private String getCleanPhoneNumber(){
 		return countryCodePicker.getNumber();
 	}
 
-	private void onNextClick(View v) {
-		if (sentCode) {
+	private void onNextClick(View v){
+		if(sentCode){
 			new CompletePhoneNumberAuth(getCleanPhoneNumber(), codeInput.getText().toString())
 					.wrapProgress(getActivity())
-					.setCallback(new SimpleCallback<CompletePhoneNumberAuth.Response>(this) {
+					.setCallback(new SimpleCallback<CompletePhoneNumberAuth.Response>(this){
 						@Override
-						public void onSuccess(CompletePhoneNumberAuth.Response result) {
-							ClubhouseSession.userToken = result.authToken;
-							ClubhouseSession.userID = result.userProfile.userId + "";
-							ClubhouseSession.isWaitlisted = result.isWaitlisted;
+						public void onSuccess(CompletePhoneNumberAuth.Response result){
+							ClubhouseSession.userToken=result.authToken;
+							ClubhouseSession.userID=result.userProfile.userId+"";
+							ClubhouseSession.isWaitlisted=result.isWaitlisted;
 							ClubhouseSession.write();
-							if (result.isWaitlisted) {
+							if(result.isWaitlisted){
 								Nav.goClearingStack(getActivity(), WaitlistedFragment.class, null);
-							} else if (result.userProfile.username == null) {
+							}else if(result.userProfile.username==null){
 								Nav.goClearingStack(getActivity(), RegisterFragment.class, null);
-							} else {
+							}else{
 								Nav.goClearingStack(getActivity(), HomeFragment.class, null);
 							}
 						}
 					})
 					.exec();
-		} else {
+		}else{
 			new StartPhoneNumberAuth(getCleanPhoneNumber())
 					.wrapProgress(getActivity())
-					.setCallback(new SimpleCallback<BaseResponse>(this) {
+					.setCallback(new SimpleCallback<BaseResponse>(this){
 						@Override
-						public void onSuccess(BaseResponse result) {
-							sentCode = true;
+						public void onSuccess(BaseResponse result){
+							sentCode=true;
 							phoneInput.setEnabled(false);
 							countryCodePicker.setClickable(false);
 							codeInput.setVisibility(View.VISIBLE);
-							showResendCodeOption.setVisibility(View.VISIBLE);
+							resendCodeLayout.setVisibility(View.VISIBLE);
 						}
 
 						@Override
-						public void onError(ErrorResponse error) {
+						public void onError(ErrorResponse error){
 							Toast.makeText(LoginFragment.this.getContext(), "Login failed", Toast.LENGTH_SHORT).show();
 						}
 					})
@@ -139,21 +137,9 @@ public class LoginFragment extends BaseToolbarFragment {
 		}
 	}
 
-	private void onResendCodeClick(View v) {
+	private void onResendClick(View v){
 		new ResendPhoneNumberAuth(getCleanPhoneNumber())
 				.wrapProgress(getActivity())
 				.exec();
-		resendCodeLayout.setVisibility(View.GONE);
-	}
-
-	private void onShowResendOption(View v) {
-		resendCodeLayout.setVisibility(View.VISIBLE);
-	}
-
-	private void onCallMeClick(View v) {
-		new CallPhoneNumberAuth(getCleanPhoneNumber())
-				.wrapProgress(getActivity())
-				.exec();
-		resendCodeLayout.setVisibility(View.GONE);
 	}
 }
