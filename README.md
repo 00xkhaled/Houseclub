@@ -1,3 +1,6 @@
+# this prject is one of a kind and unfortunatly it has been blocked by clubhouse
+# you where a blast thanks and come again gershka you suck !!!!!
+
 Unofficial Clubhouse app for Android. Inspired by [this](https://github.com/stypr/clubhouse-py).
 
 Not to be taken seriously.
