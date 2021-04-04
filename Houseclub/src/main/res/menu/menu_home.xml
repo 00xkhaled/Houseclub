@@ -43,6 +43,11 @@
         android:showAsAction="always"
         android:title="" />
 
+    <item
+        android:id="@+id/homeMenuNewChannel"
+        android:icon="@drawable/ic_baseline_add_24"
+        android:showAsAction="always"
+        android:title="" />
 
 
 </menu>

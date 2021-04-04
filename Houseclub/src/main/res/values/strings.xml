@@ -87,4 +87,11 @@
 	<string name="contact_separator" translatable="false">,&#160;</string>
     <string name="return_to_channel">Return to %1$s</string>
     <string name="mutual_followers_title">Mutual Followers</string>
+
+	<string name="create_room">Start a room</string>
+	<string name="topic_name">Add a topic</string>
+	<string name="room_open_mode">Open</string>
+	<string name="room_social_mode">Social</string>
+	<string name="room_private_mode">Private</string>
+
 </resources>

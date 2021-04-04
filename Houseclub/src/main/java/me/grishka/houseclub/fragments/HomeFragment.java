@@ -20,6 +20,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import java.util.stream.Collectors;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -256,6 +257,12 @@ public class HomeFragment extends BaseRecyclerFragment<Channel>{
 			Nav.go(getActivity(), SearchClubsListFragment.class, args);
 			return true;
 		}
+		else if (item.getItemId() == R.id.homeMenuNewChannel) {
+			Bundle args=new Bundle();
+			args.putInt("id", Integer.parseInt(ClubhouseSession.userID));
+			Nav.go(getActivity(), CreateChannelFragment.class, args);
+			return true;
+		}
 		return super.onOptionsItemSelected(item);
 
 	}
@@ -317,7 +324,7 @@ public class HomeFragment extends BaseRecyclerFragment<Channel>{
 
 		public ChannelViewHolder(){
 			super(getActivity(), R.layout.channel_row);
-			topic=findViewById(R.id.topic);
+			topic=findViewById(R.id.topic_input);
 			speakers=findViewById(R.id.speakers);
 			numSpeakers=findViewById(R.id.num_speakers);
 			numMembers=findViewById(R.id.num_members);
@@ -331,7 +338,7 @@ public class HomeFragment extends BaseRecyclerFragment<Channel>{
 
 		@Override
 		public void onBind(Channel item){
-			topic.setText(item.topic);
+			topic=findViewById(R.id.topic);
 			numMembers.setText(""+item.numAll);
 			numSpeakers.setText(""+item.numSpeakers);
 			speakers.setText(item.users.stream().map(user->user.isSpeaker ? (user.name+" 💬") : user.name).collect(Collectors.joining("\n")) );
