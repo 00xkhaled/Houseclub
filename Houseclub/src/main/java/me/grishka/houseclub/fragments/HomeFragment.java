@@ -324,7 +324,7 @@ public class HomeFragment extends BaseRecyclerFragment<Channel>{
 
 		public ChannelViewHolder(){
 			super(getActivity(), R.layout.channel_row);
-			topic=findViewById(R.id.topic_input);
+			topic=findViewById(R.id.topic);
 			speakers=findViewById(R.id.speakers);
 			numSpeakers=findViewById(R.id.num_speakers);
 			numMembers=findViewById(R.id.num_members);
@@ -338,7 +338,7 @@ public class HomeFragment extends BaseRecyclerFragment<Channel>{
 
 		@Override
 		public void onBind(Channel item){
-			topic=findViewById(R.id.topic);
+			topic.setText(item.topic);
 			numMembers.setText(""+item.numAll);
 			numSpeakers.setText(""+item.numSpeakers);
 			speakers.setText(item.users.stream().map(user->user.isSpeaker ? (user.name+" 💬") : user.name).collect(Collectors.joining("\n")) );

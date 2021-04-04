@@ -242,9 +242,9 @@ public class VoiceService extends Service{
 		pubnub.destroy();
 
 		uiHandler.post(() -> {
-			                      for(ChannelEventListener l:listeners)
-			                      	l.onSelfLeft();
-			              });
+			for(ChannelEventListener l:listeners)
+				l.onSelfLeft();
+		});
 
 
 	}
